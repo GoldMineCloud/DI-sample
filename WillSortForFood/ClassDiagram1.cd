@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WillSortForFood.Evaluators.SortingEvaluator">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Evaluators\SortingEvaluator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WillSortForFood.Evaluators.ServiceLocatorSortingEvaluator" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Evaluators\ServiceLocatorSortingEvaluator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WillSortForFood.Sorters.BubbleSorter" Collapsed="true">
+    <Position X="4.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\BubbleSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.HeapSorter" Collapsed="true">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\HeapSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.InsertSorter" Collapsed="true">
+    <Position X="6" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\InsertSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.MergeSorter" Collapsed="true">
+    <Position X="10.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\MergeSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.QuickSorter" Collapsed="true">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\QuickSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.SelectSorter" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\SelectSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.ShelSorter" Collapsed="true">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\ShelSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Sorters.SorterBase" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\SorterBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WillSortForFood.Sorters.YouPickSorter" Collapsed="true">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Sorters\YouPickSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WillSortForFood.Evaluators.DependencyInjectionSortingEvaluator">
+    <Position X="12.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Evaluators\DependencyInjectionSortingEvaluator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="WillSortForFood.Evaluators.ISortingEvaluator" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Evaluators\ISortingEvaluator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WillSortForFood.Sorters.ISorter" Collapsed="true">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sorters\ISorter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

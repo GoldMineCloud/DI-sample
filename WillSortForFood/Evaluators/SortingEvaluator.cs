@@ -8,6 +8,8 @@ namespace WillSortForFood.Evaluators
 {
     class SortingEvaluator : ISortingEvaluator
     {
+        
+
         public EvaluationResult EvaluateOn(IEnumerable<int> items)
         {
             var sorter = new BubbleSorter(); //evil =)

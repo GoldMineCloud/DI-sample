@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Autofac.Builder;
 using LinqLib.Sort;
@@ -9,6 +10,38 @@ using WillSortForFood.Sorters;
 
 namespace WillSortForFood
 {
+    public class Something
+    {
+        public Something(
+            MergeSorter sorterA, 
+            BubbleSorter sorterB,
+            QuickSorter sorterC,
+            SomeSorter sorterD)
+        {
+            Console.WriteLine(sorterA.AlgorithmName);
+            Console.WriteLine(sorterB.AlgorithmName);
+            Console.WriteLine(sorterC.AlgorithmName);
+            Console.WriteLine(sorterD.AlgorithmName);
+        }
+    }
+
+    public class SomeSorter : ISorter
+    {
+        private readonly BubbleSorter sorter;
+
+        public SomeSorter(BubbleSorter sorter)
+        {
+            this.sorter = sorter;
+        }
+
+        public string AlgorithmName { get { return "custom " + sorter.AlgorithmName; } }
+        public int[] Sort(IEnumerable<int> items)
+        {
+            return sorter.Sort(items);
+        }
+    }
+
+
     class Program
     {
         static void Main(string[] args)
@@ -17,22 +50,48 @@ namespace WillSortForFood
             var builder = new ContainerBuilder();
             builder.RegisterType<DependencyInjectionSortingEvaluator>().As<ISortingEvaluator>();
             builder.RegisterType<MergeSorter>().As<ISorter>();
+                //.SingleInstance();
+
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            builder.RegisterAssemblyTypes(currentAssembly)
+                .Where(t => t.Name.EndsWith("Sorter"))
+                .AsSelf();
+            builder.RegisterType<Something>().AsSelf();
+
+
             var container = builder.Build();
+            var something = container.Resolve<Something>();
+            //container.Resolve<Something>();
 
             //var evaluator = container.Resolve<ISortingEvaluator>();
             //var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(1000));
             //Print(result);
             #endregion
 
+            #region manual-DI
+
+            //IoC container, Unity
+
+         
+
+            //new Something(
+            //new MergeSorter(),
+            //new BubbleSorter(),
+            //new QuickSorter(),
+            //new SomeSorter(new BubbleSorter()));
+
+            #endregion
+
             #region no-DI
 
-            var evaluator = new SortingEvaluator();
-            var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
-            Print(result);
+            //var evaluator = new SortingEvaluator();
+            //var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
+            //Print(result);
 
             #endregion
 
             #region ServiceLocation
+
             //ISortingEvaluator sortingEvaluator = new ServiceLocatorSortingEvaluator(container);
             //var result = sortingEvaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
             //Print(result);
