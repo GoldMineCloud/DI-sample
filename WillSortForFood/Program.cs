@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Autofac.Core;
+using Autofac.Features;
+using Autofac.Util;
 using Autofac.Builder;
 using LinqLib.Sort;
 using WillSortForFood.Evaluators;
@@ -41,85 +44,38 @@ namespace WillSortForFood
         }
     }
 
-
     class Program
     {
         static void Main(string[] args)
         {
-            #region DI
             var builder = new ContainerBuilder();
             builder.RegisterType<DependencyInjectionSortingEvaluator>().As<ISortingEvaluator>();
-            builder.RegisterType<MergeSorter>().As<ISorter>();
-                //.SingleInstance();
+            builder.RegisterType<ShelSorter>().As<ISorter>();
+            builder.RegisterType<Something>();
 
+            //registers all types that end with "Sorter"
             var currentAssembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => t.Name.EndsWith("Sorter"))
-                .AsSelf();
-            builder.RegisterType<Something>().AsSelf();
-
-
+                .Where(t => t.Name.EndsWith("Sorter"));
             var container = builder.Build();
-            var something = container.Resolve<Something>();
-            //container.Resolve<Something>();
 
-            //var evaluator = container.Resolve<ISortingEvaluator>();
-            //var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(1000));
-            //Print(result);
-            #endregion
+            container.Resolve<Something>();
 
-            #region manual-DI
-
-            //IoC container, Unity
-
-         
-
-            //new Something(
-            //new MergeSorter(),
-            //new BubbleSorter(),
-            //new QuickSorter(),
-            //new SomeSorter(new BubbleSorter()));
-
-            #endregion
-
-            #region no-DI
-
-            //var evaluator = new SortingEvaluator();
-            //var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
-            //Print(result);
-
-            #endregion
-
-            #region ServiceLocation
-
-            //ISortingEvaluator sortingEvaluator = new ServiceLocatorSortingEvaluator(container);
-            //var result = sortingEvaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
-            //Print(result);
-
-            #endregion
-
-            #region for-fun
-
-            //ISortingEvaluator sortingEvaluator = new DependencyInjectionSortingEvaluator(new BubbleSorter());
-            //var resultB = sortingEvaluator.EvaluateOn(Enumerable.Range(0, 100).Reverse());
-            //Print(resultB);
-
-            //const int n = 10000;
-            //new []
-            //{
-            //    Evaluate(n, SortType.Bubble),
-            //    Evaluate(n, SortType.Heap),
-            //    Evaluate(n, SortType.Insert),
-            //    Evaluate(n, SortType.Merge),
-            //    Evaluate(n, SortType.Quick),
-            //    Evaluate(n, SortType.Select),
-            //    Evaluate(n, SortType.Shell)
-            //}
-            //.OrderBy(x => x.TimeInMs)
-            //.ToList()
-            //.ForEach(Print);
-
-            #endregion
+            //for fun
+            const int n = 10000;
+            new[]
+            {
+                Evaluate(n, SortType.Bubble),
+                Evaluate(n, SortType.Heap),
+                Evaluate(n, SortType.Insert),
+                Evaluate(n, SortType.Merge),
+                Evaluate(n, SortType.Quick),
+                Evaluate(n, SortType.Select),
+                Evaluate(n, SortType.Shell)
+            }
+            .OrderBy(x => x.TimeInMs)
+            .ToList()
+            .ForEach(Print);
         }
 
         private static EvaluationResult Evaluate(int n, SortType sortType)
@@ -139,7 +95,7 @@ namespace WillSortForFood
             Console.Write(" {0}ms", result.TimeInMs);
             Console.ForegroundColor = initialColor;
 
-            Console.Write(", first elemnent is {0}, last is {1}",
+            Console.Write(", first element is {0}, last is {1}",
                 result.SortedItems.First(),
                 result.SortedItems.Last());
 
