@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LinqLib.Sort;
+using WillSortForFood.Evaluators;
+using WillSortForFood.Sorters;
 
 namespace WillSortForFood
 {
@@ -12,56 +11,57 @@ namespace WillSortForFood
     {
         static void Main(string[] args)
         {
+            //SortingEvaluator evaluator = new SortingEvaluator();
+            //IEnumerable<int> items = Enumerable.Range(0, 10000).Reverse();
+            //var result = evaluator.Sort(items);
+            //Print(result);
 
-            SortingEvaluator evaluator = new SortingEvaluator();
-            var result = evaluator.Sort(Enumerable.Range(0, 1000).Reverse());
+            //ISortingEvaluator sortingEvaluator = new BetterSortingEvaluator(new BubbleSorter());
+            //var resultB = sortingEvaluator.EvaluateOn(Enumerable.Range(0, 100).Reverse());
+            //Print(resultB);
 
-            Print(result);
+            //const int n = 10000;
+            //new []
+            //{
+            //    Evaluate(n, SortType.Bubble),
+            //    Evaluate(n, SortType.Heap),
+            //    Evaluate(n, SortType.Insert),
+            //    Evaluate(n, SortType.Merge),
+            //    Evaluate(n, SortType.Quick),
+            //    Evaluate(n, SortType.Select),
+            //    Evaluate(n, SortType.Shell)
+            //}
+            //.OrderBy(x => x.TimeInMs)
+            //.ToList()
+            //.ForEach(Print);
+        }
+
+        private static EvaluationResult Evaluate(int n, SortType sortType)
+        {
+            var rnd = new Random((int)DateTime.Now.Ticks);
+
+            var items = Enumerable.Range(0, n)
+                .Select(x => rnd.Next(int.MaxValue));
+            return new BetterSortingEvaluator(new YouPickSorter(sortType))
+                .EvaluateOn(items);
         }
 
         private static void Print(EvaluationResult result)
         {
             var initialColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("");
+            Console.Write("'{0}' ", result.SortingAlgorithmName);
+            Console.ForegroundColor = initialColor;
+            Console.Write("took");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(" {0}ms", result.TimeInMs);
+            Console.ForegroundColor = initialColor;
 
-            Console.WriteLine("'{0}' took {1}ms, first elemnent is {2}, last is {3}",
-                result.SortingAlgorithmName,
-                result.TimeInMs,
+            Console.Write(", first elemnent is {0}, last is {1}",
                 result.SortedItems.First(),
                 result.SortedItems.Last());
-        }
-    }
 
-    interface ISortingEvaluator
-    {
-        EvaluationResult EvaluateOn(IEnumerable<int> items);
-    }
-
-    internal interface ISorter
-    {
-        string AlgorithmName { get; }
-        int[] Sort(IEnumerable<int> items);
-    }
-
-    class SortingEvaluator
-    {
-        public EvaluationResult Sort(IEnumerable<int> items)
-        {
-            const SortType sortType = SortType.Select;
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            int[] sortedItems = items.OrderBy(x => x, sortType).ToArray();
-
-            stopwatch.Stop();
-
-            return new EvaluationResult(sortType.ToString())
-            {
-                TimeInMs = stopwatch.ElapsedMilliseconds,
-                SortedItems = sortedItems
-            };
+            Console.WriteLine();
         }
     }
 }

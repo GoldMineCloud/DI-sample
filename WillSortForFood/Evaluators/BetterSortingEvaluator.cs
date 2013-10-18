@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using WillSortForFood.Sorters;
 
-namespace WillSortForFood
+namespace WillSortForFood.Evaluators
 {
     class BetterSortingEvaluator : ISortingEvaluator
     {

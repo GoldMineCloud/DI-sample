@@ -1,4 +1,4 @@
-﻿namespace WillSortForFood
+﻿namespace WillSortForFood.Evaluators
 {
     public class EvaluationResult
     {
