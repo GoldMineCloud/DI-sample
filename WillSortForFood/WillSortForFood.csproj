@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.1.3\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="LinqLib">
       <HintPath>..\packages\LinqExtLibrary.1.0.4.2\lib\LinqLib.dll</HintPath>
     </Reference>
@@ -44,7 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Evaluators\BetterSortingEvaluator.cs" />
+    <Compile Include="Evaluators\DependencyInjectionSortingEvaluator.cs" />
+    <Compile Include="Evaluators\ServiceLocatorSortingEvaluator.cs" />
     <Compile Include="Sorters\BubbleSorter.cs" />
     <Compile Include="Evaluators\EvaluationResult.cs" />
     <Compile Include="Sorters\HeapSorter.cs" />

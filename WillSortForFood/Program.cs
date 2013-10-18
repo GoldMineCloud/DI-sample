@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using Autofac.Builder;
 using LinqLib.Sort;
 using WillSortForFood.Evaluators;
 using WillSortForFood.Sorters;
@@ -11,12 +13,35 @@ namespace WillSortForFood
     {
         static void Main(string[] args)
         {
-            //SortingEvaluator evaluator = new SortingEvaluator();
-            //IEnumerable<int> items = Enumerable.Range(0, 10000).Reverse();
-            //var result = evaluator.Sort(items);
+            #region DI
+            var builder = new ContainerBuilder();
+            builder.RegisterType<DependencyInjectionSortingEvaluator>().As<ISortingEvaluator>();
+            builder.RegisterType<MergeSorter>().As<ISorter>();
+            var container = builder.Build();
+
+            //var evaluator = container.Resolve<ISortingEvaluator>();
+            //var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(1000));
+            //Print(result);
+            #endregion
+
+            #region no-DI
+
+            var evaluator = new SortingEvaluator();
+            var result = evaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
+            Print(result);
+
+            #endregion
+
+            #region ServiceLocation
+            //ISortingEvaluator sortingEvaluator = new ServiceLocatorSortingEvaluator(container);
+            //var result = sortingEvaluator.EvaluateOn(ArrayOfRandomIntegers(10000));
             //Print(result);
 
-            //ISortingEvaluator sortingEvaluator = new BetterSortingEvaluator(new BubbleSorter());
+            #endregion
+
+            #region for-fun
+
+            //ISortingEvaluator sortingEvaluator = new DependencyInjectionSortingEvaluator(new BubbleSorter());
             //var resultB = sortingEvaluator.EvaluateOn(Enumerable.Range(0, 100).Reverse());
             //Print(resultB);
 
@@ -34,16 +59,14 @@ namespace WillSortForFood
             //.OrderBy(x => x.TimeInMs)
             //.ToList()
             //.ForEach(Print);
+
+            #endregion
         }
 
         private static EvaluationResult Evaluate(int n, SortType sortType)
         {
-            var rnd = new Random((int)DateTime.Now.Ticks);
-
-            var items = Enumerable.Range(0, n)
-                .Select(x => rnd.Next(int.MaxValue));
-            return new BetterSortingEvaluator(new YouPickSorter(sortType))
-                .EvaluateOn(items);
+            return new DependencyInjectionSortingEvaluator(new YouPickSorter(sortType))
+                .EvaluateOn(ArrayOfRandomIntegers(n));
         }
 
         private static void Print(EvaluationResult result)
@@ -62,6 +85,13 @@ namespace WillSortForFood
                 result.SortedItems.Last());
 
             Console.WriteLine();
+        }
+
+        private static IEnumerable<int> ArrayOfRandomIntegers(int n)
+        {
+            var rnd = new Random((int) DateTime.Now.Ticks);
+            return Enumerable.Range(0, n)
+                .Select(x => rnd.Next(int.MaxValue));
         }
     }
 }

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using Autofac;
 using WillSortForFood.Sorters;
 
 namespace WillSortForFood.Evaluators
 {
     class ServiceLocatorSortingEvaluator : ISortingEvaluator
     {
-        private readonly dynamic container;
+        private readonly IContainer container;
 
-        public ServiceLocatorSortingEvaluator(dynamic container)
+        public ServiceLocatorSortingEvaluator(IContainer container)
         {
             this.container = container;
         }
@@ -18,7 +19,7 @@ namespace WillSortForFood.Evaluators
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var sorter = (ISorter)container.Resolve<ISorter>();
+            var sorter = container.Resolve<ISorter>();
             int[] sortedItems = sorter.Sort(items);
 
             stopwatch.Stop();

@@ -6,42 +6,15 @@ using WillSortForFood.Sorters;
 
 namespace WillSortForFood.Evaluators
 {
-    class SortingEvaluator
+    class SortingEvaluator : ISortingEvaluator
     {
-        public EvaluationResult Sort(IEnumerable<int> items)
-        {
-            const SortType sortType = SortType.Select;
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            int[] sortedItems = items.OrderBy(x => x, sortType).ToArray();
-
-            stopwatch.Stop();
-
-            return new EvaluationResult(sortType.ToString())
-            {
-                TimeInMs = stopwatch.ElapsedMilliseconds,
-                SortedItems = sortedItems
-            };
-        }
-    }
-
-    class ServiceLocatorSortingEvaluator : ISortingEvaluator
-    {
-        private readonly dynamic container;
-
-        public ServiceLocatorSortingEvaluator(dynamic container)
-        {
-            this.container = container;
-        }
-
         public EvaluationResult EvaluateOn(IEnumerable<int> items)
         {
+            var sorter = new BubbleSorter(); //evil =)
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var sorter = (ISorter)container.Resolve<ISorter>();
             int[] sortedItems = sorter.Sort(items);
 
             stopwatch.Stop();
