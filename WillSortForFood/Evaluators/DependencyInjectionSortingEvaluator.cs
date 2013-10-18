@@ -5,11 +5,11 @@ using WillSortForFood.Sorters;
 
 namespace WillSortForFood.Evaluators
 {
-    class BetterSortingEvaluator : ISortingEvaluator
+    class DependencyInjectionSortingEvaluator : ISortingEvaluator
     {
         private readonly ISorter sorter;
 
-        public BetterSortingEvaluator(ISorter sorter)
+        public DependencyInjectionSortingEvaluator(ISorter sorter)
         {
             this.sorter = sorter;
         }
